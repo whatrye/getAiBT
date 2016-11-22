@@ -1,10 +1,19 @@
-#coding: utf-8
+#coding: UTF-8
 #获取帖子列表网页中的每个帖子的链接
+#v0.2
 
 from bs4 import BeautifulSoup
 import urllib2,urllib,time,os
 import getpagelink, gettorrentlink, gettorrent
-import bencode
+import bencode  #解码torrent
+from colorama import init,Fore,Back,Style #控制台彩色输出用
+import io, sys
+
+print u'系统默认编码：',sys.getdefaultencoding() #获取系统默认编码
+#sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='gb18030') #改变标准输出的默认编码
+
+init(autoreset = True)
+
 #调用时使用gettorrent.get_torrent()
 #或者 from getpagelink import *
 #from gettorrentlink import *
@@ -22,35 +31,42 @@ if not os.path.exists(torrentsPath):
 
 enable_proxy = False
 if enable_proxy:
-    print 'proxy enabled\n'
+    print(Fore.GREEN + 'proxy enabled\n\n')
+else:
+    print Fore.GREEN + 'proxy disabled\n\n'
     
 user_agent = 'Mozilla/5.0'
-mypage_number = 1
-total_pages = 2
+firstpage_number = 1
+total_pages = 3
 pagelink_pre ='http://208.94.244.98/bt/thread.php?fid=16&page='
 link_dict = {}
 #link_dict[1] = getpagelink.getlink_list(my_page = myfirst_page)
-for mypage_number in range(1,total_pages+1):
+link_count = 0
+for mypage_number in range(firstpage_number,firstpage_number+total_pages):
     cur_page = pagelink_pre + str(mypage_number)
     link_dict[mypage_number] = getpagelink.getlink_list(my_page = cur_page, enable_proxy = enable_proxy)
-print 'link_dict length is: '+str(len(link_dict))
+    link_count = link_count + len(link_dict[mypage_number])
+print Fore.YELLOW + 'link_dict length is: '+str(len(link_dict)) + '\n'
+print Fore.CYAN + 'Total links: ', link_count, '\n'
 
 n = 0
 link_nu = 1
 for link_nu in range(1,len(link_dict)+1):
     for link,name in link_dict[link_nu].items():
         n=n+1
-        print n,unicode(link),unicode(name)
+        print n,unicode(link)
+        print u'name 的编码形式: ',name.__class__ #获取name的编码形式
+        print name.encode('gb18030')  #文件名输出有编码问题
 
         outfile_name = unicode(name+'.torrent')
         outfile_full_path = unicode(torrentsPath+'\\'+outfile_name)
         
         if os.path.exists(outfile_full_path) and os.path.isfile(outfile_full_path) and os.access(outfile_full_path,os.R_OK):
-            print 'this torrent file already exist, skip save.\n'
+            print Fore.RED + Style.BRIGHT + 'this torrent file already exist, skip save.\n'
         else:
             #获取torrent代码
             torrent_code = gettorrentlink.get_torrentlink(myreq_url = link, enable_proxy = enable_proxy)
-            print torrent_code
+            print Fore.BLUE + Back.YELLOW + torrent_code
             
             #获取torrent内容
             torrent_content = gettorrent.get_torrent(torrent_name_code = torrent_code, enable_proxy = enable_proxy)
@@ -80,9 +96,9 @@ for link_nu in range(1,len(link_dict)+1):
                     temp = val['size']
                     temppath = val['path']
             print '%d files'%len(btlist)
-            #print 'the MAX file in the torrent %s is: '%outfile_name + unicode(temppath)
-            print 'the MAX file in the torrent is: ', unicode(temppath)
-            print 'size : ',  str(temp), '\n'
+            print 'the MAX file in the torrent %s is: '%outfile_name + unicode(temppath)
+            #print 'the MAX file in the torrent is: ', temppath.decode('gbk')
+            #print 'size : ',  str(temp), '\n'
             
             #输出torrent文件
             #print 'file not exist\n'+ outfile_full_path

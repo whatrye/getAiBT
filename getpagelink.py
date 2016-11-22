@@ -1,4 +1,4 @@
-#coding: utf-8
+#coding: UTF-8
 #获取帖子列表网页中的每个帖子的链接
 
 from bs4 import BeautifulSoup
@@ -7,7 +7,7 @@ import re
 pattern = re.compile("[.*M]")
 pattern2 = re.compile("[.*G]")
 
-def getlink_list(my_page='http://208.94.244.98/bt/thread.php?fid=16&page=1',enable_proxy = False):
+def getlink_list(my_page='http://208.94.244.98/bt/thread.php?fid=16&page=2',enable_proxy = False):
     "获取网页中帖子链接的列表"
     user_agent='Mozilla/5.0'
     mypre_link=u'http://208.94.244.98/bt/'
@@ -29,6 +29,12 @@ def getlink_list(my_page='http://208.94.244.98/bt/thread.php?fid=16&page=1',enab
         req=urllib2.Request(url=my_page,headers=myheaders)
         response=urllib2.urlopen(req)
         content=response.read()
+        content = content.decode("gbk","ignore")
+        if isinstance(content,unicode):
+            print 'the content is unicode\n'
+        else:
+            print 'the content is not unicode\n'
+        print content.__class__
 #        print
 #        print 'The real URL is: '
 #        print response.geturl()
@@ -57,7 +63,7 @@ def getlink_list(my_page='http://208.94.244.98/bt/thread.php?fid=16&page=1',enab
             #也可用unicode(str,'gbk'),与str.decode('gbk')一样
             if mytag_href.find('htm_data') != -1:
                 if mytag_title == None:
-                    if unicode(mytag_string).find(u'发帖者')==-1 &  unicode(mytag_string).find(u'版规')==-1:            
+                    if mytag_string.find(u'发帖者')==-1 & mytag_string.find(u'版规')==-1:            
                         #print 'the tag A is: %s' %unicode(mytag_a)
                         #print 'the href is: %s' %unicode(mytag_href)
                         myfull_link=mypre_link+mytag_href
@@ -83,10 +89,16 @@ def getlink_list(my_page='http://208.94.244.98/bt/thread.php?fid=16&page=1',enab
                             mytorrent_filename=mt1_str[pos_c+2:]
                         else:
                             mytorrent_filename=mt1_str
+                        #mytorrent_filename=mytorrent_filename.decode('gbk','ignore')
 
                         #测试是否是unicode
                         if isinstance(mytorrent_filename,unicode):
                             print 'filename is unicode\n',mytorrent_filename
+                        else:
+                            print 'filename is not unicode\n',mytorrent_filename
+                            print mytorrent_filename.__class__
+                            mytorrent_filename = mytorrent_filename.decode('gbk','ignore')
+                        print mytorrent_filename.__class__
                             
                         #去除文件名中的空格,"/","\"等字符
                         str_beremove = re.compile(r'["/","\"]')
@@ -96,9 +108,15 @@ def getlink_list(my_page='http://208.94.244.98/bt/thread.php?fid=16&page=1',enab
                         mytorrent_filename = str_beremove.sub(' ',mytorrent_filename)
                         #mytorrent_filename.split()
                         #mytorrent_filename = ' '.join(mytorrent_filename.split())
+                        #去除尾部"-"号
+                        str_beremove = re.compile('-$')
+                        mytorrent_filename = str_beremove.sub('',mytorrent_filename)
+
                         mytorrent_filename.strip()
-                                                
-                        print mytorrent_filename
+                        print 'aaaaaaa'
+                        print mytorrent_filename	#编码问题老出错
+                        print mytorrent_filename.__class__
+						
                         
                         #用replace方法去除字符
                         #mytorrent_filename.replace(' ','') #去除文件名中的空格
@@ -114,7 +132,7 @@ def getlink_list(my_page='http://208.94.244.98/bt/thread.php?fid=16&page=1',enab
             #linkpos=mylinks[0].string.find('=')
             #print linkpos
             #print mylinks[0].string[linkpos+1:linkpos+11]
-        print 'total %s links in this page: %s' %(n,my_page)
+        print 'total %s links in this page: %s\n' %(n,my_page)
         #for llink,llname in link_dict.items():
          #   print llink, llname
         #print link_dict
