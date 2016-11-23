@@ -18,7 +18,7 @@ def getlink_list(my_page='http://208.94.244.98/bt/thread.php?fid=16&page=2',enab
     try:
     #使用proxy的添加。build_opener用于自定义Opener对象，应用于验证(HTTPBasicAuthHandler)、cookie(HTTPCookieProcessor)、代理(ProxyHandler)
     #在程序中明确控制Proxy而不是受环境变量http_proxy的影响
-        proxy_handler=urllib2.ProxyHandler({"http":"127.0.0.1:8787","https":"127.0.0.1:8787"})
+        proxy_handler=urllib2.ProxyHandler({"http":"127.0.0.1:8787","https":"127.0.0.1:8787","socks":"127.0.0.1:1080"})
         null_proxy_handler=urllib2.ProxyHandler({})
         if enable_proxy:
             opener=urllib2.build_opener(proxy_handler)
@@ -144,5 +144,7 @@ def getlink_list(my_page='http://208.94.244.98/bt/thread.php?fid=16&page=2',enab
 
     return link_dict
 
-#for a,b in getlink_list(enable_proxy = False).items():
-#    print a,b
+if __name__ == '__main__':
+    print __name__
+    for a,b in getlink_list(enable_proxy = True).items():
+        print a,b
