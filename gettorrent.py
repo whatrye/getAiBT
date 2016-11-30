@@ -25,7 +25,7 @@ def get_torrent(torrent_name_code='9XAlbQ2DCd',enable_proxy = False):
     try:
     #使用proxy的添加。build_opener用于自定义Opener对象，应用于验证(HTTPBasicAuthHandler)、cookie(HTTPCookieProcessor)、代理(ProxyHandler)
     #在程序中明确控制Proxy而不是受环境变量http_proxy的影响
-        proxy_handler=urllib2.ProxyHandler({"http":"127.0.0.1:8787","https":"127.0.0.1:8787"})
+        proxy_handler=urllib2.ProxyHandler({"http":"127.0.0.1:8787","https":"127.0.0.1:8787","socks":"127.0.0.1:1080"})
         null_proxy_handler=urllib2.ProxyHandler({})
         if enable_proxy:
             opener=urllib2.build_opener(proxy_handler)

@@ -29,7 +29,7 @@ torrentsPath = 'torrents'
 if not os.path.exists(torrentsPath):
     os.makedirs(torrentsPath)
 
-enable_proxy = False
+enable_proxy = True
 if enable_proxy:
     print(Fore.GREEN + 'proxy enabled\n\n')
 else:
@@ -37,7 +37,7 @@ else:
     
 user_agent = 'Mozilla/5.0'
 firstpage_number = 1
-total_pages = 3
+total_pages = 2
 pagelink_pre ='http://208.94.244.98/bt/thread.php?fid=16&page='
 link_dict = {}
 #link_dict[1] = getpagelink.getlink_list(my_page = myfirst_page)
