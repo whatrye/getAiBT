@@ -29,7 +29,7 @@ torrentsPath = 'torrents'
 if not os.path.exists(torrentsPath):
     os.makedirs(torrentsPath)
 
-enable_proxy = True
+enable_proxy = False
 if enable_proxy:
     print(Fore.GREEN + 'proxy enabled\n\n')
 else:
@@ -38,25 +38,28 @@ else:
 user_agent = 'Mozilla/5.0'
 firstpage_number = 1
 total_pages = 2
-pagelink_pre ='http://208.94.244.98/bt/thread.php?fid=16&page='
+page_host = u'www.go543.com'
+#pagelink_pre ='http://208.94.244.98/bt/thread.php?fid=16&page='
+pagelink_pre = u'http://' + page_host + u'/bt/thread.php?fid=16&page='
 link_dict = {}
 #link_dict[1] = getpagelink.getlink_list(my_page = myfirst_page)
 link_count = 0
 for mypage_number in range(firstpage_number,firstpage_number+total_pages):
     cur_page = pagelink_pre + str(mypage_number)
-    link_dict[mypage_number] = getpagelink.getlink_list(my_page = cur_page, enable_proxy = enable_proxy)
+    link_dict[mypage_number] = getpagelink.getlink_list(my_page = cur_page, page_host = page_host, enable_proxy = enable_proxy)
     link_count = link_count + len(link_dict[mypage_number])
 print Fore.YELLOW + 'link_dict length is: '+str(len(link_dict)) + '\n'
 print Fore.CYAN + 'Total links: ', link_count, '\n'
 
 n = 0
 link_nu = 1
-for link_nu in range(1,len(link_dict)+1):
+for link_nu in range(firstpage_number,firstpage_number+len(link_dict)):
+    print link_nu
     for link,name in link_dict[link_nu].items():
-        n=n+1
+        n = n+1
         print n,unicode(link)
-        print u'name 的编码形式: ',name.__class__ #获取name的编码形式
-        print name.encode('gb18030')  #文件名输出有编码问题
+        #print u'name 的编码形式: ',name.__class__ #获取name的编码形式
+        print '     ' + name.encode('gb18030')  #文件名输出有编码问题
 
         outfile_name = unicode(name+'.torrent')
         outfile_full_path = unicode(torrentsPath+'\\'+outfile_name)
@@ -66,7 +69,7 @@ for link_nu in range(1,len(link_dict)+1):
         else:
             #获取torrent代码
             torrent_code = gettorrentlink.get_torrentlink(myreq_url = link, enable_proxy = enable_proxy)
-            print Fore.BLUE + Back.YELLOW + torrent_code
+            print '     ' + Fore.BLUE + Back.YELLOW + torrent_code
             
             #获取torrent内容
             torrent_content = gettorrent.get_torrent(torrent_name_code = torrent_code, enable_proxy = enable_proxy)
@@ -76,9 +79,10 @@ for link_nu in range(1,len(link_dict)+1):
             try:
                 btinfo = bencode.bdecode(torrent_content)
             except Exception,detail:
-                print "ERROR: ",detail
+                print "ERROR4: ",detail
                 print
                 continue
+            print '     decode torrent finished'
                 
             info = btinfo['info']
             btlist = {}
@@ -95,8 +99,11 @@ for link_nu in range(1,len(link_dict)+1):
                 if val['size'] > temp:
                     temp = val['size']
                     temppath = val['path']
-            print '%d files'%len(btlist)
-            print 'the MAX file in the torrent %s is: '%outfile_name + unicode(temppath)
+            print '     %d files'%len(btlist)
+            try:
+                print '     the MAX file in the torrent %s is: '%outfile_name + unicode(temppath)
+            except Exception, detail:
+                print 'Error5: ',detail
             #print 'the MAX file in the torrent is: ', temppath.decode('gbk')
             #print 'size : ',  str(temp), '\n'
             
@@ -109,3 +116,8 @@ for link_nu in range(1,len(link_dict)+1):
 
 print
 print 'over'
+
+if __name__ == '__main__':
+    print __name__
+
+
