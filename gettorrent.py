@@ -4,7 +4,7 @@
 from bs4 import BeautifulSoup
 import urllib2,urllib
 
-def get_torrent(torrent_name_code='9XAlbQ2DCd',enable_proxy = False):
+def get_torrent(torrent_name_code='9XAlbQ2DCd',enable_proxy = False, proxy_string = {"http":"127.0.0.1:8787","https":"127.0.0.1:8787","socks":"127.0.0.1:1080"}):
     "获取torrent的实际内容"
     user_agent='Mozilla/5.0'
     formdata={'code':torrent_name_code}
@@ -22,10 +22,11 @@ def get_torrent(torrent_name_code='9XAlbQ2DCd',enable_proxy = False):
     #opener =urllib2.build_opener(httpHandler, httpsHandler)
     #urllib2.install_opener(opener)
 
+    print '     Fetching Torrent file ...'
     try:
     #使用proxy的添加。build_opener用于自定义Opener对象，应用于验证(HTTPBasicAuthHandler)、cookie(HTTPCookieProcessor)、代理(ProxyHandler)
     #在程序中明确控制Proxy而不是受环境变量http_proxy的影响
-        proxy_handler=urllib2.ProxyHandler({"http":"127.0.0.1:8787","https":"127.0.0.1:8787","socks":"127.0.0.1:1080"})
+        proxy_handler=urllib2.ProxyHandler(proxy_string)
         null_proxy_handler=urllib2.ProxyHandler({})
         if enable_proxy:
             opener=urllib2.build_opener(proxy_handler)
@@ -58,9 +59,9 @@ def get_torrent(torrent_name_code='9XAlbQ2DCd',enable_proxy = False):
         #print
 
     except urllib2.HTTPError, e:
-        print "ERROR: Code",e.code
+        print "     ERROR: Code",e.code
     except Exception,detail:
-        print "ERROR: ",detail
+        print "     ERROR: ",detail
 
     return content
 

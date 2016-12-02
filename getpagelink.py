@@ -7,7 +7,7 @@ import re
 pattern = re.compile("[.*M]")
 pattern2 = re.compile("[.*G]")
 
-def getlink_list(my_page='http://www.go543.com/bt/thread.php?fid=16&page=1',page_host = u'www.go543.com',enable_proxy = False):
+def getlink_list(my_page='http://www.go543.com/bt/thread.php?fid=16&page=1',page_host = u'www.go543.com',enable_proxy = False, proxy_string = {"http":"127.0.0.1:8787","https":"127.0.0.1:8787","socks":"127.0.0.1:1080"}):
     "获取网页中帖子链接的列表"
     user_agent = 'Mozilla/5.0'
     mypre_link = u'http://'+ page_host + u'/bt/'
@@ -18,7 +18,7 @@ def getlink_list(my_page='http://www.go543.com/bt/thread.php?fid=16&page=1',page
     try:
     #使用proxy的添加。build_opener用于自定义Opener对象，应用于验证(HTTPBasicAuthHandler)、cookie(HTTPCookieProcessor)、代理(ProxyHandler)
     #在程序中明确控制Proxy而不是受环境变量http_proxy的影响
-        proxy_handler = urllib2.ProxyHandler({"http":"127.0.0.1:8787","https":"127.0.0.1:8787","socks":"127.0.0.1:1080"})
+        proxy_handler = urllib2.ProxyHandler(proxy_string)
         null_proxy_handler = urllib2.ProxyHandler({})
         if enable_proxy:
             opener = urllib2.build_opener(proxy_handler)
@@ -101,16 +101,19 @@ def getlink_list(my_page='http://www.go543.com/bt/thread.php?fid=16&page=1',page
                                 mytorrent_filename = mytorrent_filename.decode('gbk','ignore')
                             print '     ',mytorrent_filename.__class__
                                 
-                            #去除文件名中的空格,"/","\"等字符
+                            #去除文件名中的"/","\"等字符
                             str_beremove = re.compile(r'["/","\"]')
                             mytorrent_filename = str_beremove.sub('',mytorrent_filename)
                             #去除2个以上的空格
-                            str_beremove = re.compile('\s+') #1以及以上的空格，也可以用'\s{2,}'，表示2以及以上的空格
+                            str_beremove = re.compile('\s+') #将1以及以上的空格(也可以用'\s{2,}'，表示2以及以上的空格)替换为一个空格
                             mytorrent_filename = str_beremove.sub(' ',mytorrent_filename)
                             #mytorrent_filename.split()
                             #mytorrent_filename = ' '.join(mytorrent_filename.split())
                             #去除尾部"-"号
                             str_beremove = re.compile('-$')
+                            mytorrent_filename = str_beremove.sub('',mytorrent_filename)
+                            #去除尾部空格
+                            str_beremove = re.compile('\s+$')
                             mytorrent_filename = str_beremove.sub('',mytorrent_filename)
 
                             mytorrent_filename.strip()
@@ -129,7 +132,7 @@ def getlink_list(my_page='http://www.go543.com/bt/thread.php?fid=16&page=1',page
                             #print
                             n = n+1
                         except Exception,detail:
-                            print "Error0: ",detail
+                            print "     Error0: ",detail
             #linkpos=mylinks[0].string.find('=')
             #print linkpos
             #print mylinks[0].string[linkpos+1:linkpos+11]
