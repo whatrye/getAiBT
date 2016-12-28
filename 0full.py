@@ -1,6 +1,6 @@
 #coding: UTF-8
 #获取帖子列表网页中的每个帖子的链接
-#v0.2
+#v0.3
 
 from bs4 import BeautifulSoup
 import urllib2,urllib,time,os

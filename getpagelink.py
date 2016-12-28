@@ -1,5 +1,6 @@
 #coding: UTF-8
 #获取帖子列表网页中的每个帖子的链接
+#version: 0.3
 
 from bs4 import BeautifulSoup
 import urllib2,urllib
@@ -109,8 +110,14 @@ def getlink_list(my_page='http://www.go543.com/bt/thread.php?fid=16&page=1',page
                             mytorrent_filename = str_beremove.sub(' ',mytorrent_filename)
                             #mytorrent_filename.split()
                             #mytorrent_filename = ' '.join(mytorrent_filename.split())
-                            #去除尾部"-"号
+                            #去除尾部"-" "�"号
                             str_beremove = re.compile('-$')
+                            mytorrent_filename = str_beremove.sub('',mytorrent_filename)
+                            
+                            str_beremove = re.compile('�$')
+                            mytorrent_filename = str_beremove.sub('',mytorrent_filename)
+                            
+                            str_beremove = re.compile('a>$')
                             mytorrent_filename = str_beremove.sub('',mytorrent_filename)
                             #去除尾部空格
                             str_beremove = re.compile('\s+$')
