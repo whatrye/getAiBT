@@ -4,7 +4,7 @@
 from bs4 import BeautifulSoup
 import urllib2, urllib
 
-def get_torrentlink(myreq_url='http://208.94.244.98/bt/htm_data/16/1609/860163.html',enable_proxy = False, proxy_string = {"http":"127.0.0.1:8787","https":"127.0.0.1:8787","socks":"127.0.0.1:1080"}):
+def get_torrentlink(myreq_url='https://www.aisex.com/bt/htm_data/16/1609/860163.html',enable_proxy = False, proxy_string = {"http":"127.0.0.1:8787","https":"127.0.0.1:8787","socks":"127.0.0.1:1080"}):
     "从指定的网页中获取torrent的代码"
     user_agent = 'Mozilla/5.0'
     myheaders = {'User-Agent':user_agent}
