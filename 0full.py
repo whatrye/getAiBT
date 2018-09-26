@@ -1,6 +1,7 @@
 #coding: UTF-8
 #获取帖子列表网页中的每个帖子的链接
-#v0.3
+#v0.4
+#2018.9.26
 
 from bs4 import BeautifulSoup
 import urllib2,urllib,time,os
@@ -40,9 +41,9 @@ def main():
     user_agent = 'Mozilla/5.0'
     firstpage_number = 1
     total_pages = 2
-    page_host = u'www.go543.com'
+    page_host = u'www.aisex.com'
     #pagelink_pre ='http://208.94.244.98/bt/thread.php?fid=16&page='
-    pagelink_pre = u'http://' + page_host + u'/bt/thread.php?fid=16&page='
+    pagelink_pre = u'https://' + page_host + u'/bt/thread.php?fid=16&page='
     link_dict = {}
     #link_dict[1] = getpagelink.getlink_list(my_page = myfirst_page)
     link_count = 0
