@@ -1,6 +1,6 @@
 #coding: UTF-8
 #获取帖子列表网页中的每个帖子的链接
-#version: 0.3
+#version: 0.4
 
 from bs4 import BeautifulSoup
 import urllib2,urllib
@@ -8,10 +8,10 @@ import re
 pattern = re.compile("[.*M]")
 pattern2 = re.compile("[.*G]")
 
-def getlink_list(my_page='http://www.go543.com/bt/thread.php?fid=16&page=1',page_host = u'www.go543.com',enable_proxy = False, proxy_string = {"http":"127.0.0.1:8787","https":"127.0.0.1:8787","socks":"127.0.0.1:1080"}):
+def getlink_list(my_page='https://www.aisex.com/bt/thread.php?fid=16&page=1',page_host = u'www.aisex.com',enable_proxy = False, proxy_string = {"http":"127.0.0.1:8787","https":"127.0.0.1:8787","socks":"127.0.0.1:1080"}):
     "获取网页中帖子链接的列表"
     user_agent = 'Mozilla/5.0'
-    mypre_link = u'http://'+ page_host + u'/bt/'
+    mypre_link = u'https://'+ page_host + u'/bt/'
 
     myheaders = {'User-Agent':user_agent}
     #enable_proxy = False
