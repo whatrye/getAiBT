@@ -22,7 +22,7 @@ def get_torrent(torrent_name_code='9XAlbQ2DCd',enable_proxy = False, proxy_strin
     #opener =urllib2.build_opener(httpHandler, httpsHandler)
     #urllib2.install_opener(opener)
 
-    print '     Fetching Torrent file ...'
+    print ('     Fetching Torrent file ...')
     try:
     #使用proxy的添加。build_opener用于自定义Opener对象，应用于验证(HTTPBasicAuthHandler)、cookie(HTTPCookieProcessor)、代理(ProxyHandler)
     #在程序中明确控制Proxy而不是受环境变量http_proxy的影响
@@ -47,21 +47,21 @@ def get_torrent(torrent_name_code='9XAlbQ2DCd',enable_proxy = False, proxy_strin
     #如果你不创建一个Request,而是直接使用urlopen()方法,Python强制把Content-Type改为application/x-www-form-urlencoded.
         req=urllib2.Request(url='http://www.jandown.com/fetch.php',data=data_encoded,headers=myheaders)
         response=urllib2.urlopen(req)
-        content=response.read()
-        #print
-        #print 'The real URL is: '
-        #print response.geturl()
-        #print
-        #print 'The Response info is:'
-        #info=response.info()
-        #for key,value in info.items():
-        #    print "%s = %s" % (key,value)
-        #print
-
-    except urllib2.HTTPError, e:
-        print "     ERROR: Code",e.code
-    except Exception,detail:
-        print "     ERROR: ",detail
+    except (urllib2.HTTPError, e):
+        print ("     ERROR: Code",e.code)
+    except (Exception,detail):
+        print ("     ERROR: ",detail)
+        
+    content=response.read()
+    #print
+    #print 'The real URL is: '
+    #print response.geturl()
+    #print
+    #print 'The Response info is:'
+    #info=response.info()
+    #for key,value in info.items():
+    #    print "%s = %s" % (key,value)
+    #print
 
     return content
 
