@@ -1,3 +1,5 @@
+#! python2
+# -*- coding: UTF-8 -*-
 #coding: UTF-8
 #获取帖子列表网页中的每个帖子的链接
 

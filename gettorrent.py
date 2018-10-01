@@ -1,4 +1,6 @@
-#coding: utf-8
+#! python2
+# -*- coding: UTF-8 -*-
+#coding: UTF-8
 #获取www.jandown.com上的torrent
 
 from bs4 import BeautifulSoup
