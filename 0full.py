@@ -3,14 +3,15 @@
 #v0.5 python2.7 add https://bt.aisex.com
 
 from bs4 import BeautifulSoup
-import urllib2,urllib,time,os
+#import urllib2
+import urllib,time,os
 import getpagelink, gettorrentlink, gettorrent
 import bencode  #解码torrent
 from colorama import init,Fore,Back,Style #控制台彩色输出用
 import io, sys
 
 def main():
-    print (u'系统默认编码：',sys.getdefaultencoding()) #获取系统默认编码
+    print u'系统默认编码：',sys.getdefaultencoding() #获取系统默认编码
     #sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='gb18030') #改变标准输出的默认编码
 
     init(autoreset = True)
@@ -27,14 +28,14 @@ def main():
 
     enable_proxy = False
     if enable_proxy:
-        print('proxy enabled\n\n')
+        print 'proxy enabled\n\n'
     else:
-        print ('proxy disabled\n\n')
+        print 'proxy disabled\n\n'
     '''
     if enable_proxy:
-        print(Fore.GREEN + 'proxy enabled\n\n')
+        printFore.GREEN + 'proxy enabled\n\n'
     else:
-        print (Fore.GREEN + 'proxy disabled\n\n')
+        print Fore.GREEN + 'proxy disabled\n\n'
     '''    
     proxy_string = {"http":"127.0.0.1:8787","https":"127.0.0.1:8787","socks":"127.0.0.1:1080"}
     user_agent = 'Mozilla/5.0'
@@ -57,33 +58,33 @@ def main():
         cur_page = pagelink_pre + str(mypage_number)
         link_dict[mypage_number] = getpagelink.getlink_list(my_page = cur_page, page_host = page_host, enable_proxy = enable_proxy, proxy_string = proxy_string)
         link_count = link_count + len(link_dict[mypage_number])
-    print ('link_dict length is: '+str(len(link_dict)) + '\n')
-    print ('Total links: ', link_count, '\n')
+    print 'link_dict length is: '+str(len(link_dict)) + '\n'
+    print 'Total links: ', link_count, '\n'
     '''
-    print (Fore.YELLOW + 'link_dict length is: '+str(len(link_dict)) + '\n')
-    print (Fore.CYAN + 'Total links: ', link_count, '\n')
+    print Fore.YELLOW + 'link_dict length is: '+str(len(link_dict)) + '\n'
+    print Fore.CYAN + 'Total links: ', link_count, '\n'
     '''
 
     n = 0
     link_nu = 1
     for link_nu in range(firstpage_number,firstpage_number+len(link_dict)):
-        print (link_nu)
+        print link_nu
         for link,name in link_dict[link_nu].items():
             n = n+1
-            print (n,unicode(link))
+            print n,unicode(link)
             #print u'name 的编码形式: ',name.__class__ #获取name的编码形式
-            print ('     ' + name.encode('gb18030'))  #文件名输出有编码问题
+            print '     ' + name.encode('gb18030')  #文件名输出有编码问题
 
             outfile_name = unicode(name+'.torrent')
             outfile_full_path = unicode(torrentsPath+'\\'+outfile_name)
             
             if os.path.exists(outfile_full_path) and os.path.isfile(outfile_full_path) and os.access(outfile_full_path,os.R_OK):
-                print ('this torrent file already exist, skip save.\n')
+                print 'this torrent file already exist, skip save.\n'
                 #print Fore.RED + Style.BRIGHT + 'this torrent file already exist, skip save.\n'
             else:
                 #获取torrent代码
                 torrent_code = gettorrentlink.get_torrentlink(myreq_url = link, enable_proxy = enable_proxy, proxy_string = proxy_string)
-                print ('     ' + torrent_code)
+                print '     ' + torrent_code
                 #print '     ' + Fore.BLUE + Back.YELLOW + torrent_code
                 
                 #获取torrent内容
@@ -94,11 +95,11 @@ def main():
                 #解码torrent
                 try:
                     btinfo = bencode.bdecode(torrent_content)
-                except (Exception,detail):
-                    print ("     ERROR4: ",detail)
-                    print   ()
+                except Exception,detail:
+                    print "     ERROR4: ",detail
+                    print
                     continue
-                print ('     decode torrent finished')
+                print '     decode torrent finished'
                     
                 info = btinfo['info']
                 btlist = {}
@@ -115,11 +116,11 @@ def main():
                     if val['size'] > temp:
                         temp = val['size']
                         temppath = val['path']
-                print ('     %d files'%len(btlist))
+                print '     %d files'%len(btlist)
                 try:
                     print ('     the MAX file in the torrent %s is: '%outfile_name + unicode(temppath))
-                except (Exception, detail):
-                    print ('     Error5: ',detail)
+                except Exception, detail:
+                    print '     Error5: ',detail
                 #print 'the MAX file in the torrent is: ', temppath.decode('gbk')
                 #print 'size : ',  str(temp), '\n'
                 
@@ -130,10 +131,10 @@ def main():
                 outFile.close()
                 #time.sleep(1)
 
-    print   ()
-    print ('over')
+    print
+    print 'over'
 
 if __name__ == '__main__':
-    print (__name__)
+    print __name__
     main()
 

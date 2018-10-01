@@ -24,10 +24,10 @@ def get_torrentlink(myreq_url='http://208.94.244.98/bt/htm_data/16/1609/860163.h
 
         req = urllib2.Request(url = myreq_url, headers=myheaders)
         response = urllib2.urlopen(req)
-    except (urllib2.HTTPError, e):
-        print ("     ERROR: Code",e.code)
-    except (Exception,detail):
-        print ("     ERROR: ",detail)
+    except urllib2.HTTPError, e:
+        print "     ERROR: Code",e.code
+    except Exception,detail:
+        print "     ERROR: ",detail
         
     content = response.read()
 
@@ -81,4 +81,4 @@ def get_torrentlink(myreq_url='http://208.94.244.98/bt/htm_data/16/1609/860163.h
     return torrent_name_code
 
 if __name__ == '__main__':
-    print (get_torrentlink(myreq_url='https://www.aisex.com/bt/htm_data/16/1609/860163.html'))
+    print get_torrentlink(myreq_url='https://www.aisex.com/bt/htm_data/16/1609/860163.html')

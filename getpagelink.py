@@ -29,17 +29,17 @@ def getlink_list(my_page='https://www.aisex.com/bt/thread.php?fid=16&page=1',pag
 
         req = urllib2.Request(url = my_page, headers = myheaders)
         response = urllib2.urlopen(req)
-    except (urllib2.HTTPError, e):
-        print ("ERROR1: Code",e.code)
-    except (Exception,detail):
-        print ("ERROR1: ",detail)
+    except urllib2.HTTPError, e:
+        print "ERROR1: Code",e.code
+    except Exception,detail:
+        print "ERROR1: ",detail
 
     content = response.read()
     content = content.decode("gbk","ignore")
     if isinstance(content,unicode):
-        print ('the content is unicode\n')
+        print 'the content is unicode\n'
     else:
-        print ('the content is not unicode\n')
+        print 'the content is not unicode\n'
 #        print content.__class__
 #        print
 #        print 'The real URL is: '
@@ -100,12 +100,12 @@ def getlink_list(my_page='https://www.aisex.com/bt/thread.php?fid=16&page=1',pag
                     try:
                         #测试是否是unicode
                         if isinstance(mytorrent_filename,unicode):
-                            print ('filename is unicode\n        ',mytorrent_filename)
+                            print 'filename is unicode\n        ',mytorrent_filename
                         else:
-                            print ('filename is not unicode\n        ',mytorrent_filename)
-                            print (mytorrent_filename.__class__)
+                            print 'filename is not unicode\n        ',mytorrent_filename
+                            print mytorrent_filename.__class__
                             mytorrent_filename = mytorrent_filename.decode('gbk','ignore')
-                        print ('     ',mytorrent_filename.__class__)
+                        print '     ',mytorrent_filename.__class__
                             
                         #去除文件名中的"/","\"等字符
                         str_beremove = re.compile(r'["/","\"]')
@@ -130,7 +130,7 @@ def getlink_list(my_page='https://www.aisex.com/bt/thread.php?fid=16&page=1',pag
 
                         mytorrent_filename.strip()
                         #print 'aaaaaaa'
-                        print ('     Refined filename: ',mytorrent_filename)	#编码问题老出错
+                        print '     Refined filename: ',mytorrent_filename	#编码问题老出错
                         
                         #用replace方法去除字符
                         #mytorrent_filename.replace(' ','') #去除文件名中的空格
@@ -143,12 +143,12 @@ def getlink_list(my_page='https://www.aisex.com/bt/thread.php?fid=16&page=1',pag
                         #print 'the title of A is: ', %unicode(mytag_title)
                         #print
                         n = n+1
-                    except (Exception,detail):
-                        print ("     Error0: ",detail)
+                    except Exception,detail:
+                        print "     Error0: ",detail
         #linkpos=mylinks[0].string.find('=')
         #print linkpos
         #print mylinks[0].string[linkpos+1:linkpos+11]
-    print ('total %s links in this page: %s\n' %(n,my_page))
+    print 'total %s links in this page: %s\n' %(n,my_page)
     #for llink,llname in link_dict.items():
      #   print llink, llname
     #print link_dict
@@ -156,9 +156,9 @@ def getlink_list(my_page='https://www.aisex.com/bt/thread.php?fid=16&page=1',pag
     return link_dict
 
 if __name__ == '__main__':
-    print ('not run in module mode ',__name__)
+    print 'not run in module mode ',__name__
     n = 0
     for a,b in getlink_list(enable_proxy = False).items():
         n = n + 1
-        print (n,a,b)
+        print n,a,b
         
