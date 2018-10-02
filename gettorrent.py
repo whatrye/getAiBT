@@ -69,7 +69,3 @@ def get_torrent(torrent_name_code='9XAlbQ2DCd',enable_proxy = False, proxy_strin
 
 if __name__ == '__main__':
     get_torrent()
-#outFile = open('out.torrent','wb')
-#torrent_content=get_torrent()
-#outFile.write(torrent_content)
-#outFile.close()
