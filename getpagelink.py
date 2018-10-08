@@ -129,8 +129,8 @@ def getlink_list(my_page='https://www.aisex.com/bt/thread.php?fid=16&page=1',pag
                         
                         str_beremove = re.compile('a>$')
                         mytorrent_filename = str_beremove.sub('',mytorrent_filename)
-                        #去除尾部空格
-                        str_beremove = re.compile('\s+$')
+                        #去除尾部空格,等价于{0,}
+                        str_beremove = re.compile('\s*$')
                         mytorrent_filename = str_beremove.sub('',mytorrent_filename)
 
                         mytorrent_filename.strip()                        
