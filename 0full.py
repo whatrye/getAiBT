@@ -77,7 +77,7 @@ def main():
             n = n+1
             print Fore.GREEN + Style.BRIGHT + str(n),'page:',unicode(link)
             #print u'name 的编码形式: ',name.__class__ #获取name的编码形式
-            print Fore.YELLOW + Style.BRIGHT + '     Title: ' + lTitle            
+            print Fore.YELLOW + Style.BRIGHT + '     Title: ' + '\"' + lTitle + '\"'            
             
             #去除文件名中的问号
             symbol_remove = re.compile(r'["?"]')
