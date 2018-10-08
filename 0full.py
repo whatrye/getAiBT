@@ -102,7 +102,7 @@ def main():
                 try:
                     btinfo = bencode.bdecode(torrent_content)
                 except Exception,detail:
-                    print "     ERROR4: ",detail
+                    print Fore.RED + Style.BRIGHT + "     ERROR4: ",detail
                     print
                     continue
                 #print '     decode torrent finished'
