@@ -86,7 +86,7 @@ def main():
             name = symbol_remove.sub('',lTitle)
 
             outfile_name = unicode(lTitle+'.torrent')
-            outfile_full_path = unicode(torrentsPath+'\\'+outfile_name)
+            outfile_full_path = unicode(torrentsPath+r'/'+outfile_name)
             
             if os.path.exists(outfile_full_path) and os.path.isfile(outfile_full_path) and os.access(outfile_full_path,os.R_OK):
                 print Fore.RED + Style.BRIGHT + 'this torrent file already exist, skip.\n'
