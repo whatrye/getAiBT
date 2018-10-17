@@ -79,12 +79,13 @@ def main():
             #print u'name 的编码形式: ',name.__class__ #获取name的编码形式
             print Fore.YELLOW + Style.BRIGHT + '     Title: ' + '\"' + lTitle + '\"'            
             
+            '''
             #去除文件名中的问号
             symbol_remove = re.compile(r'["?"]')
-            name = symbol_remove.sub('',lTitle)
+            lTitle = symbol_remove.sub('',lTitle)
             symbol_remove = re.compile("['\u2764','\u3099','\u266a']")
-            name = symbol_remove.sub('',lTitle)
-
+            lTitle = symbol_remove.sub('',lTitle)
+            '''
             outfile_name = unicode(lTitle+'.torrent')
             outfile_full_path = unicode(torrentsPath+r'/'+outfile_name)
             
