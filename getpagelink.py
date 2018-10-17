@@ -6,6 +6,7 @@
 from bs4 import BeautifulSoup
 import urllib2,urllib
 import re
+from pStr import refineString,removeSstr
 pattern = re.compile("[.*M]")
 pattern2 = re.compile("[.*G]")
 
@@ -77,7 +78,7 @@ def getlink_list(my_page='https://www.aisex.com/bt/thread.php?fid=16&page=1',pag
                     #print 'the href is: %s' %unicode(mytag_href)
                     myfull_link = mypre_link+mytag_href
                     link_list.append(myfull_link)
-                    
+                    '''
                     #去除标题尾部的'[vip474]'字串
                     pos_vip474 = mytag_string.find('[vi')
                     if pos_vip474 != -1:
@@ -94,11 +95,13 @@ def getlink_list(my_page='https://www.aisex.com/bt/thread.php?fid=16&page=1',pag
                     else:
                         mt1_str = mt_str
                         
-                    pos_c = mt_str.find('M]')
+                    pos_c = mt1_str.find('M]')
                     if pos_c != -1:
                         mytorrent_filename = mt1_str[pos_c+2:]
                     else:
-                        mytorrent_filename = mt1_str                    
+                        mytorrent_filename = mt1_str
+                        '''
+                    mytorrent_filename = removeSstr(mytag_string)
 
                     try:
                         '''
@@ -111,7 +114,7 @@ def getlink_list(my_page='https://www.aisex.com/bt/thread.php?fid=16&page=1',pag
                             mytorrent_filename = mytorrent_filename.decode('gbk','ignore')
                         print '     ',mytorrent_filename.__class__
                         '''
-
+                        '''
                         #去除文件名中的"/","\"等字符
                         str_beremove = re.compile(r'["/","\"]')
                         mytorrent_filename = str_beremove.sub('',mytorrent_filename)
@@ -135,9 +138,11 @@ def getlink_list(my_page='https://www.aisex.com/bt/thread.php?fid=16&page=1',pag
                         
                         #去除尾部空格,等价于{0,}
                         str_beremove = re.compile('\s*$')
-                        mytorrent_filename = str_beremove.sub('',mytorrent_filename)                        
+                        mytorrent_filename = str_beremove.sub('',mytorrent_filename)
 
-                        mytorrent_filename.strip()                        
+                        mytorrent_filename.strip()
+                        '''
+                        mytorrent_filename = refineString(mytorrent_filename)
                         n = n+1
                         print '    ',n,'Refined Title: ',mytorrent_filename
                         
