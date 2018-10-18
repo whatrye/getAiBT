@@ -11,6 +11,8 @@ import io, sys, re
 
 def removeSstr(mystr):
     #去除标题尾部的'[vip474]'字串
+    #sy_beremove = re.compile(r'\[vi(.*?)4\]')
+    #mt_str = sy_beremove.sub('',mystr)
     pos_vip474 = mystr.find('[vi')
     if pos_vip474 != -1:
         mt_str = mystr[0:pos_vip474]
@@ -18,6 +20,9 @@ def removeSstr(mystr):
         mt_str = mystr
         
     #去除标题开头的'[MP4/x.xxG]'字串
+    #sy_beremove = re.compile(r'(.*?)G\]')
+    #mt1_str = sy_beremove.sub('',mt_str)
+    
     pos_b = mt_str.find('G]')
     if pos_b != -1:
         mt1_str = mt_str[pos_b+2:]
