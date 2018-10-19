@@ -10,19 +10,25 @@ from colorama import init,Fore,Back,Style #控制台彩色输出用
 import io, sys, re
 
 def removeSstr(mystr):
+    #去除特定字符串
     #去除标题尾部的'[vip474]'字串
-    #sy_beremove = re.compile(r'\[vi(.*?)4\]')
-    #mt_str = sy_beremove.sub('',mystr)
+    sy_beremove = re.compile('\[vi.*?4\]')
+    mt_str = sy_beremove.sub('',mystr)
+
+    '''
     pos_vip474 = mystr.find('[vi')
     if pos_vip474 != -1:
         mt_str = mystr[0:pos_vip474]
     else:
         mt_str = mystr
+        '''
         
     #去除标题开头的'[MP4/x.xxG]'字串
-    #sy_beremove = re.compile(r'(.*?)G\]')
-    #mt1_str = sy_beremove.sub('',mt_str)
-    
+    mt1_str = re.compile('\[M.*?G\]').sub('',mt_str)
+
+    outstr = re.compile('\[M.*?MB\]').sub('',mt1_str)
+
+    '''
     pos_b = mt_str.find('G]')
     if pos_b != -1:
         mt1_str = mt_str[pos_b+2:]
@@ -34,14 +40,13 @@ def removeSstr(mystr):
         outstr = mt1_str[pos_c+2:]
     else:
         outstr = mt1_str
+        '''
     return outstr
 
 def refineString(mystring):
-    symbol_remove = re.compile("r'[vip474]'")
-    fineString = symbol_remove.sub(' ',mystring)
-
+    #去除特定字符
     symbol_remove = re.compile("[r'/',r'\',r'?',r':']")
-    fineString = symbol_remove.sub(' ',fineString)
+    fineString = symbol_remove.sub(' ',mystring)
 
     symbol_remove = re.compile('-$')
     fineString = symbol_remove.sub(' ',fineString)
