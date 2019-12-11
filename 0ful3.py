@@ -13,11 +13,12 @@ import getpagelink3, gettorrentlink3, gettorrent3
 import bencode  #解码torrent
 from colorama import init,Fore,Back,Style #控制台彩色输出用
 import io, sys, re
+from imp import reload
 
 headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36'}
 
 def main():
-    #reload(sys)
+    reload(sys)
     #print u'系统默认编码：',sys.getdefaultencoding() #获取系统默认编码
     #sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='gb18030') #改变标准输出的默认编码
 	
@@ -43,7 +44,7 @@ def main():
         print('proxy disabled\n\n')
     '''
     if enable_proxy:
-        printFore.GREEN + 'proxy enabled\n\n'
+        print Fore.GREEN + 'proxy enabled\n\n'
     else:
         print Fore.GREEN + 'proxy disabled\n\n'
     '''    
@@ -78,8 +79,8 @@ def main():
         print('page',link_nu)
         for link,lTitle in link_dict[link_nu].items():
             n = n+1
-            #print(Fore.GREEN + Style.BRIGHT + str(n),'page:',unicode(link))
-            print(Fore.GREEN + Style.BRIGHT + str(n),'page:',link)
+            print(Fore.GREEN + Style.BRIGHT + str(n),'page:',str(link))
+            #print(Fore.GREEN + Style.BRIGHT + str(n),'page:',link)
             #print u'name 的编码形式: ',name.__class__ #获取name的编码形式
             print(Fore.YELLOW + Style.BRIGHT + '     Title: ' + '\"' + lTitle + '\"')
             
@@ -90,10 +91,10 @@ def main():
             symbol_remove = re.compile("['\u2764','\u3099','\u266a']")
             lTitle = symbol_remove.sub('',lTitle)
             '''
-            #outfile_name = unicode(lTitle+'.torrent')
-            outfile_name = lTitle+'.torrent'
-            #outfile_full_path = unicode(torrentsPath+r'/'+outfile_name)
-            outfile_full_path = torrentsPath+r'/'+outfile_name
+            outfile_name = str(lTitle+'.torrent')
+            #outfile_name = lTitle+'.torrent'
+            outfile_full_path = str(torrentsPath+r'/'+outfile_name)
+            #outfile_full_path = torrentsPath+r'/'+outfile_name
             
             if os.path.exists(outfile_full_path) and os.path.isfile(outfile_full_path) and os.access(outfile_full_path,os.R_OK):
                 print(Fore.RED + Style.BRIGHT + 'this torrent file already exist, skip.\n')
