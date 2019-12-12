@@ -56,7 +56,7 @@ def main():
         total_pages = int(sys.argv[2])
     else:
         firstpage_number = 1
-        total_pages = 2
+        total_pages = 1
 
     page_host = u'bt.aisex.com'
     pagelink_pre = u'https://' + page_host + u'/bt/thread.php?fid=16&page='
@@ -114,20 +114,62 @@ def main():
                     print()
                     continue
                 #print '     decode torrent finished'
-                    
-                info = btinfo['info']
+
+                '''
+                info_list = []
+                for i in btinfo:
+                    info_list.append(i)
+                    print(i)
+
+                print("bt announce(tracker服务器列表):",btinfo[b'announce'].decode())
+                print("bt announce-list(备用tracker列表):",btinfo[b'announce-list'].decode())
+                lin_list=[]
+                for udp_list in btinfo[b'announce-list']:
+                    for lin in udp_list:
+                        lin_list.append(lin.decode())
+                        print(lin.decode())
+                print("bt comment:",btinfo[b'comment'].decode())
+                print("bt creator:",btinfo[b'created by'].decode())
+                print("bt 编码方式encoding:",btinfo[b'encoding'].decode())
+                print("bt info:",btinfo[b'info'].decode())
+                for k in btinfo[b'info'].keys():
+                    value = btinfo[b'info'][k]
+                    if k == b'files':
+                        print("total %d files"%len(value))
+                        for v_list_dic in value:
+                            print(v_list_dic)
+                            for files_k,files_v in v_list_dic.items():
+                                print(files_k,files_v)
+                    elif k == b'name':
+                        print("file name:",value.decode())
+                    elif k == b'md5sum':
+                        print("md5:",value)
+                    elif k == b'length':
+                        print("file size:",value)
+                    elif k == b'path':
+                        print("file path name:",value)
+                    elif k == b'piece length':
+                        print("每个块的大小:",value)
+                    elif k == b'pieces':
+                        print("每个块的20个字节的SHA1 Hash的值（二进制格式）:",str(value))
+                print("nodes的数据类型：",type(btinfo[b'nodes']))
+                print(btinfo[b'nodes'])
+                '''
+
+                
+                info = btinfo[b'info']
                 btlist = {}
                 fsize = 0
-                for bfile in info['files']:
-                    if len(bfile['path']) > 1:                        
-                        fname0 = bfile['path'][0]+'/'+bfile['path'][1]
+                for bfile in info[b'files']:
+                    if len(bfile[b'path']) > 1:                        
+                        fname0 = bfile[b'path'][0]+'/'+bfile[b'path'][1]
                     else:                        
-                        fname0 = bfile['path'][0]
-                    btlist[bfile['path'][0]] = {'path':fname0,'size':bfile['length']} #生成新字典{path:{'path':path,'size':size}}
+                        fname0 = bfile[b'path'][0]
+                    btlist[bfile[b'path'][0]] = {'path':fname0,'size':bfile[b'length']} #生成新字典{path:{'path':path,'size':size}}
 
-                    if bfile['length'] > fsize:
+                    if bfile[b'length'] > fsize:
                         fname = fname0
-                        fsize = bfile['length']
+                        fsize = bfile[b'length']
                     
                 '''
                 fsize = 0
