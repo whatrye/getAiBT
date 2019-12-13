@@ -162,7 +162,7 @@ def main():
                 fsize = 0
                 for bfile in info[b'files']:
                     if len(bfile[b'path']) > 1:                        
-                        fname0 = bfile[b'path'][0]+'/'+bfile[b'path'][1]
+                        fname0 = str(bfile[b'path'][0])+'/'+str(bfile[b'path'][1])
                     else:                        
                         fname0 = bfile[b'path'][0]
                     btlist[bfile[b'path'][0]] = {'path':fname0,'size':bfile[b'length']} #生成新字典{path:{'path':path,'size':size}}
