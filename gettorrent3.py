@@ -79,4 +79,5 @@ def get_torrent(torrent_name_code='vic8w2AM',enable_proxy = False, proxy_string 
     return content
 
 if __name__ == '__main__':
-    print(get_torrent())
+    #print('content of file:',get_torrent(torrent_name_code = 'jsfzlQT0'))
+    print('content of file:',str(get_torrent()))
