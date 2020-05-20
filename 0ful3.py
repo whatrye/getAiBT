@@ -78,6 +78,9 @@ def main():
     for link_nu in range(firstpage_number,firstpage_number+len(link_dict)):
         print('page',link_nu)
         for link,lTitle in link_dict[link_nu].items():
+            title = ''
+            imglinklist = []
+            
             n = n+1
             print(Fore.GREEN + Style.BRIGHT + str(n),'page:',str(link))
             #print(Fore.GREEN + Style.BRIGHT + str(n),'page:',link)
@@ -101,8 +104,9 @@ def main():
                 print(Fore.RED + Style.BRIGHT + 'this torrent file already exist, skip.\n')
             else:
                 #获取torrent代码
-                torrent_code = gettorrentlink3.get_torrentlink(myreq_url = link, enable_proxy = enable_proxy, proxy_string = proxy_string)
+                torrent_code,title,imglinklist = gettorrentlink3.get_torrentlink(myreq_url = link, enable_proxy = enable_proxy, proxy_string = proxy_string)
                 print('     CODE:', torrent_code)
+                print(title,imglinklist)
                 
                 #获取torrent内容
                 torrent_content = gettorrent3.get_torrent(torrent_name_code = torrent_code, enable_proxy = enable_proxy, proxy_string = proxy_string)

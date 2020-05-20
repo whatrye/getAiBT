@@ -89,8 +89,18 @@ def get_torrentlink(myreq_url='https://bt.aisex.com/bt/htm_data/16/1609/860163.h
 #            print torrent_name_code
 
 
+    #获取img链接到列表imgs
+    imgs = []
+    m_imgs = soup.find('div',id = 'read_tpc').find_all('img')
+    for m_img in m_imgs:
+        imgs.append(m_img.get('src'))
 
-    return torrent_name_code
+    #获取title
+    title = ''
+    title = soup.find('h1',id = 'subject_tpc').next_element #或者.get_text() 或者.text 或者.innerHTML 或者.innerText
+    title = title.strip()
+
+    return torrent_name_code,title,imgs
 
 if __name__ == '__main__':
     print(get_torrentlink(myreq_url='https://www.aisex.com/bt/htm_data/16/1609/860163.html'))
