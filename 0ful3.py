@@ -14,6 +14,7 @@ import bencode  #解码torrent
 from colorama import init,Fore,Back,Style #控制台彩色输出用
 import io, sys, re
 from imp import reload
+from getImg import getImg
 
 headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36'}
 
@@ -107,6 +108,13 @@ def main():
                 torrent_code,title,imglinklist = gettorrentlink3.get_torrentlink(myreq_url = link, enable_proxy = enable_proxy, proxy_string = proxy_string)
                 print('     CODE:', torrent_code)
                 print(title,imglinklist)
+                for imglink in imglinklist:
+                    picname,imgContent = getImg(imgLink = imglink)
+                    if len(imgContent) > 0:
+                        picFullpath = (outdir + r'/' + picname)
+                        ofile = open(picFullpath,'wb')
+                        ofile.write(imgContent)
+                        ofile.close()
                 
                 #获取torrent内容
                 torrent_content = gettorrent3.get_torrent(torrent_name_code = torrent_code, enable_proxy = enable_proxy, proxy_string = proxy_string)
