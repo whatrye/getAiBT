@@ -98,7 +98,8 @@ def getlink_list(my_page='https://www.aisex.com/bt/thread.php?fid=16&page=1',pag
                     else:
                         mytorrent_filename = mt1_str
                         '''
-                    mytorrent_filename = removeSstr(mytag_string)
+                    #mytorrent_filename = removeSstr(mytag_string)
+                    mytorrent_filename = mytag_string
 
                     try:
                         '''

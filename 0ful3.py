@@ -91,10 +91,11 @@ def main():
             symbol_remove = re.compile("['\u2764','\u3099','\u266a']")
             lTitle = symbol_remove.sub('',lTitle)
             '''
-            outfile_name = str(lTitle+'.torrent')
-            #outfile_name = lTitle+'.torrent'
-            outfile_full_path = str(torrentsPath+r'/'+outfile_name)
-            #outfile_full_path = torrentsPath+r'/'+outfile_name
+            outfile_name = str(lTitle + '.torrent')
+            outdir = str(torrentsPath + r'/' + lTitle)
+            if not os.path.exists(outdir):
+                os.makedirs(outdir)
+            outfile_full_path = str(outdir + r'/' + outfile_name)
             
             if os.path.exists(outfile_full_path) and os.path.isfile(outfile_full_path) and os.access(outfile_full_path,os.R_OK):
                 print(Fore.RED + Style.BRIGHT + 'this torrent file already exist, skip.\n')
@@ -114,6 +115,7 @@ def main():
                     print()
                     continue
                 #print '     decode torrent finished'
+
 
                 '''
                 info_list = []

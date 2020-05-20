@@ -45,8 +45,9 @@ def removeSstr(mystr):
 def refineString(mystring):
     #去除特定字符
     #去除文件名中的"/","\"等字符
-    symbol_remove = re.compile("[r'/',r'\',r'?',r':']")
-    fineString = symbol_remove.sub(' ',mystring)
+    fineString = mystring
+    symbol_remove = re.compile("['/','\','?',':']")
+    fineString = symbol_remove.sub(' ',fineString)
 
     #去除尾部"-" "�"号
     symbol_remove = re.compile('-$')
