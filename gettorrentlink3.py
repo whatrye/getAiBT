@@ -44,6 +44,7 @@ def get_torrentlink(myreq_url='https://bt.aisex.com/bt/htm_data/16/1609/860163.h
         
 
     soup = BeautifulSoup(r1.content,'html.parser')
+    torrent_name_code = 'notExist'
 
     #锚点A没被放在img标签里的
     m_as = soup.find('div',id = 'read_tpc').find_all('a') #链接在read_tpc这个div里
@@ -60,6 +61,7 @@ def get_torrentlink(myreq_url='https://bt.aisex.com/bt/htm_data/16/1609/860163.h
             linkpos=temp_href.find('=') #需要的torrent代码在"link.php?ref="后面
             #链接码的长度是10
             torrent_name_code = temp_href[linkpos+1:linkpos+11]
+
     #m_brs = soup.find('div',id='read_tpc').find_all('br')
     #m_br = m_brs[0]
     #print m_br
