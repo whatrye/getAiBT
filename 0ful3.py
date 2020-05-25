@@ -14,7 +14,7 @@ import bencode  #解码torrent
 from colorama import init,Fore,Back,Style #控制台彩色输出用
 import io, sys, re
 from imp import reload
-from getImg import getImg
+from getImg import getImg,getImgs
 
 headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36'}
 
@@ -111,14 +111,15 @@ def main():
                 print('total ',len(imglinklist),' pics.')
                 
                 #保存图片
-                if len(imglinklist) > 0:
-                    for imglink in imglinklist:
-                        picname,imgContent = getImg(imgLink = imglink)
-                        if len(imgContent) > 0:
-                            picFullpath = (outdir + r'/' + picname)
-                            ofile = open(picFullpath,'wb')
-                            ofile.write(imgContent)
-                            ofile.close()
+                getImgs(imglinklist,outdir)
+##                if len(imglinklist) > 0:
+##                    for imglink in imglinklist:
+##                        picname,imgContent = getImg(imgLink = imglink)
+##                        if len(imgContent) > 0:
+##                            picFullpath = (outdir + r'/' + picname)
+##                            ofile = open(picFullpath,'wb')
+##                            ofile.write(imgContent)
+##                            ofile.close()
 
                 
                 #获取torrent内容
@@ -211,6 +212,10 @@ def main():
                         outFile.write(torrent_content)
                         outFile.close()
                         #time.sleep(1)
+                    else:
+                        print('torrent not exist!')
+                else:
+                    print('torrent_code not exist!')
 
     print('over')
 
