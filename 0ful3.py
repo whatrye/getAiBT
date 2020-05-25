@@ -61,7 +61,7 @@ def main():
 
     page_host = u'bt.aisex.com'
     pagelink_pre = u'https://' + page_host + u'/bt/thread.php?fid=16&page='
-    link_dict = {}
+    link_dict = {} #link_dict:  {pagenumber:{fulllink:torrentfilename}}
     link_count = 0
     for mypage_number in range(firstpage_number,firstpage_number+total_pages):
         cur_page = pagelink_pre + str(mypage_number)
