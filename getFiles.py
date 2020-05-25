@@ -8,7 +8,7 @@ import requests,queue,threading
 
 imgQueue = queue.Queue()
 
-def getFile(fileLink,fileName,outdir,enable_proxy = False, proxy_string = {"http":"127.0.0.1:8787","https":"127.0.0.1:8787","socks":"127.0.0.1:1080"}):
+def getFile(fileLink,fileName,outdir,enable_proxy = False, m = "g",tcode = 'vic8w2AM', proxy_string = {"http":"127.0.0.1:8787","https":"127.0.0.1:8787","socks":"127.0.0.1:1080"}):
     "下载单独文件"
     proxies = {}
     timeout = 15
@@ -16,8 +16,14 @@ def getFile(fileLink,fileName,outdir,enable_proxy = False, proxy_string = {"http
     picFilename = fileName
 
     headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36'}
+    
     try:
-        r1 = requests.get(fileLink, headers = headers,proxies = proxies,timeout = timeout)
+        if m == 'p':
+            formdata={'code':tcode}
+            r1 = requests.post('http://www.jandown.com/fetch.php',data = formdata, headers = headers)
+        else:
+            r1 = requests.get(fileLink, headers = headers,proxies = proxies,timeout = timeout)
+            
         imgContent = r1.content
         if len(imgContent) > 0:
             picFullpath = (outdir + r'/' + picFilename)
@@ -26,6 +32,7 @@ def getFile(fileLink,fileName,outdir,enable_proxy = False, proxy_string = {"http
             ofile.close()
     except Exception as e:
         print('error:',e)
+
 ##    return picFilename,content
 
 def getFileT(myQueue,outdir,enable_proxy = False, proxy_string = {"http":"127.0.0.1:8787","https":"127.0.0.1:8787","socks":"127.0.0.1:1080"}):
