@@ -10,7 +10,7 @@ def threadFunc(myQueue,para2):
     try:
         val1 = myQueue,get_nowait()
         j = myQueue.qsize()
-    excep Exception as e:
+    except Exception as e:
         break
     return val1
 
