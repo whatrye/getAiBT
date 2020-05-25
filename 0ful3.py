@@ -63,6 +63,7 @@ def main():
     pagelink_pre = u'https://' + page_host + u'/bt/thread.php?fid=16&page='
     link_dict = {} #link_dict:  {pagenumber:{fulllink:torrentfilename}}
     link_count = 0
+    torrentItemList = []
     for mypage_number in range(firstpage_number,firstpage_number+total_pages):
         cur_page = pagelink_pre + str(mypage_number)
         link_dict[mypage_number] = getpagelink3.getlink_list(my_page = cur_page, page_host = page_host, enable_proxy = enable_proxy, proxy_string = proxy_string)
@@ -109,7 +110,17 @@ def main():
                 print('     CODE:', torrent_code)
                 print(title,imglinklist)
                 print('total ',len(imglinklist),' pics.')
+
+                torrent_item = {'tCode':torrent_code,'tTitle':title,'imgLinkList':imglinklist}
+                torrentItemList.append(torrent_item)
                 
+##                fileList = []
+##                for imgLink in imglinklist:
+##                    outdir = str(torrentsPath + r'/' + title)
+##                    ifilename = imgLink[imgLink.rfind('/')+1:len(imgLink)]
+##                    fileList.append({link:imgLink,ofile:ifilename})
+
+                    
                 #保存图片
                 getImgs(imglinklist,outdir)
 ##                if len(imglinklist) > 0:
@@ -217,6 +228,7 @@ def main():
                 else:
                     print('torrent_code not exist!')
 
+    print(torrentItemList)
     print('over')
 
 if __name__ == '__main__':
