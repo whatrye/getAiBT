@@ -43,7 +43,7 @@ def getImgT(myQueue,outpath,enable_proxy = False, proxy_string = {"http":"127.0.
     picFilename = ''
 
     imgLink = myQueue.get_nowait()
-    picFilename = imgLink[imgLink.rfind('/')+1:len(imgLink)]
+    picFilename = imgLink[imgLink.rfind('/')+1:]
 
     headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36'}
     try:
