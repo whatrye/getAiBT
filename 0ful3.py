@@ -13,7 +13,7 @@ import getpagelink3, gettorrentlink3, gettorrent3
 import bencode  #解码torrent
 from colorama import init,Fore,Back,Style #控制台彩色输出用
 import io, sys, re
-from imp import reload
+from importlib import reload
 from getImg import getImg,getImgs
 
 headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36'}
