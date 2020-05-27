@@ -35,9 +35,9 @@ def main():
     #调用时直接使用 get_torrent
 
     torrentsPath = 'torrents'
-    if not os.path.exists(torrentsPath):
-        os.makedirs(torrentsPath)
-
+##    if not os.path.exists(torrentsPath):
+##        os.makedirs(torrentsPath)
+    os.makedirs(torrentsPath,exist_ok=True)
     enable_proxy = False
     if enable_proxy:
         print('proxy enabled\n\n')
@@ -98,8 +98,9 @@ def main():
             '''
             outfile_name = str(lTitle + '.torrent')
             outdir = str(torrentsPath + r'/' + lTitle)
-            if not os.path.exists(outdir):
-                os.makedirs(outdir)
+##            if not os.path.exists(outdir):
+##                os.makedirs(outdir)
+            os.makedirs(outdir,exist_ok=True)
             outfile_full_path = str(outdir + r'/' + outfile_name)
             
             if os.path.exists(outfile_full_path) and os.path.isfile(outfile_full_path) and os.access(outfile_full_path,os.R_OK):
