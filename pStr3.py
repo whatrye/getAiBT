@@ -70,7 +70,7 @@ def refineString(mystring):
     symbol_remove = re.compile('\s*$')
     fineString = symbol_remove.sub('',fineString)
 
-    fineString.strip()    
+    fineString = fineString.strip()    
     return fineString
 
 if __name__ == '__main__':
